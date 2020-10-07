@@ -21,14 +21,47 @@
     </fieldset>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb406f2cafb8138a0576b013b04f038c"></script>
     <script>
-        var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
-        var mapOption = { 
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
+        // //샘플코드
+        // var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+        // var mapOption = { 
+        //         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        //         level: 3 // 지도의 확대 레벨
+        //     };
         
-        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        var map = new kakao.maps.Map(mapContainer, mapOption); 
+        // // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        // var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+        var map;
+        //나의 현재 위치 위도, 경도 얻기
+        if(navigator.geolocation){//브라우저의 Geolocation지원여부 확인
+            //PositionOptions객체 설정
+            var options = {timeout:3000,maxinumAge:5000};
+            navigator.geolocation.getCurrentPosition(successCallback);
+        }
+
+        //위치정보를 받아 올때 자동으로 실행될 콜백함수
+        function successCallback(position){
+            //위도 경도 얻기
+            var lat = position.coords.latitude;//위도
+            var lng = position.coords.longitude;//경도
+            //div에 지도 표시하기
+            displayKaKaoMap(lat,lng);
+
+        };
+
+        //지도표시함수
+        function displayKaKaoMap(lat,lng){
+            var container = document.getElementById('map'); // 지도를 표시할 div 
+            var option = { 
+                    center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+            
+            // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+            map = new kakao.maps.Map(container, option);//지도생성 및 지도객체생성 
+        };
+
+
     </script>
 </body>
 </html>
